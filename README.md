@@ -1,11 +1,6 @@
 # vscode-arcadia
 
 ### Getting Started
-The quickest way to get going is to install the latest 
-*.vsix file from the releases: 
-[v0.0.1](https://github.com/worrel/vscode-arcadia/releases/download/v0.0.1/vscode-arcadia-0.0.1.vsix)
-into VSCode: `code vscode-arcadia-0.0.1.vsix`
-
 To run from source, clone the repo somewhere & open the 
 root folder in VSCode.  Run the extension in an 
 Extension Development Host by pressing `F5`, or 
@@ -51,3 +46,14 @@ combined with `:output-wrapper true`. The other requirements
 are specifying `:main` and calling `(set! *main-cli-fn* -main)` 
 from that namespace as documented on the ClojureScript 
 NodeJS wiki page.
+
+To build the .vsix file, install the vsce extension and
+use its 'package' subcommand.  The .vsix file can be
+installed:
+
+- via VSCode's --install-extension command via
+the command line -OR-
+
+- via the 'Install from .VSIX...' menu item in the
+'More Actions...' menu in the Extension panel of VSCode's
+GUI
