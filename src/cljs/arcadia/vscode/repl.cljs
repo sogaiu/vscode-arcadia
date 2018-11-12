@@ -6,7 +6,7 @@
               :refer [export! get-config new-promise new-Range resolved-promise then 
                       register-command! register-text-editor-command!]]))
 
-(def dgram (js/require "dgram"))
+(def net (js/require "net"))
 (def vscode (js/require "vscode"))
 
 (def repl (atom nil))
@@ -20,27 +20,28 @@
  [cmd]
  (new-promise
   (fn [resolve]
-    (let [{:keys [input server output host port]} @repl]
+    (let [{:keys [input client output]} @repl]
       (swap! input str cmd)
       (let [[bs us] (p/check-forms @input)]
         (doseq [bal bs]
           (.appendLine output bal)
-          (.send server bal port host))
+          (.write client bal))
+        (.write client "\n")
         (reset! input (or us ""))
         (resolve true))))))
 
-(defn parse-msg
-  [msg]
-  (-> msg 
+(defn parse-data
+  [data]
+  (-> data 
       (.toString) 
       (.split "\n")
       ((juxt #(.pop %) #(.join % "\n")))))
 
 (defn handle-response
- [output msg rinfo]
- (let [[prompt result] (parse-msg msg)]
-  (.appendLine output result) 
-  (.append output prompt)))
+  [output data]
+  (let [[prompt result] (parse-data data)]
+    (.appendLine output result) 
+    (.append output prompt)))
 
 (def repl-init
  (quote 
@@ -52,12 +53,17 @@
             (println (str "; Mono " (.Invoke (.GetMethod Mono.Runtime "GetDisplayName" (enum-or System.Reflection.BindingFlags/NonPublic System.Reflection.BindingFlags/Static)) nil nil)))))))
 
 (defn connect-repl 
- [output host port]
- (let [server (.createSocket dgram "udp4")]
-  (.on server "error" #(println "Server error: " (js->clj %)))
-  (.on server "message" (partial handle-response output))
-  (.send server (str repl-init) port host)
-  server))
+  [output host port]
+  (let [client (net.Socket.)]
+    (.connect client port host
+      (fn []
+        (.on client "error"
+          #(println "Server error: " (js->clj %)))
+        (.on client "data"
+          (partial handle-response output))
+        (.on client "ready"
+          #(.write client (str repl-init "\n")))))
+    client))
 
 (defn when-no-repl
  [f]
@@ -77,11 +83,11 @@
     (.show out true)
     (println "REPL started!")
     (reset! repl
-      {:server conn
-        :input (atom "")
-        :output out
-        :host host
-        :port port})))
+      {:client conn
+       :input (atom "")
+       :output out
+       :host host
+       :port port})))
             
 (defn start-repl
   []
