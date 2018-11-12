@@ -38,12 +38,12 @@
             "properties": {
                 "arcadia.replHost": {
                     "type": "string",
-                    "default": "localhost",
+                    "default": "::1",
                     "description": "REPL host"
                 },
                 "arcadia.replPort": {
                     "type": "number",
-                    "default": 11211,
+                    "default": 5555,
                     "description": "REPL port"
                 }
             }
