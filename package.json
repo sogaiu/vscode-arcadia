@@ -43,7 +43,7 @@
                 },
                 "arcadia.replPort": {
                     "type": "number",
-                    "default": 5555,
+                    "default": 37220,
                     "description": "REPL port"
                 }
             }
