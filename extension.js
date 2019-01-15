@@ -21567,74 +21567,6 @@ clojure.string.ends_with_QMARK_ = function(a, b) {
 clojure.string.includes_QMARK_ = function(a, b) {
   return goog.string.contains(a, b);
 };
-var arcadia = {vscode:{}};
-arcadia.vscode.parens = {};
-arcadia.vscode.parens.PARENS = "[]{}()";
-arcadia.vscode.parens.add_to_form = function(a, b) {
-  return cljs.core.update.call(null, a, new cljs.core.Keyword(null, "form", "form", -1624062471), function(a, b) {
-    return [cljs.core.str(cljs.core.truth_(a) ? a : ""), cljs.core.str(b)].join("");
-  }, b);
-};
-arcadia.vscode.parens.kill_ws = function(a) {
-  return function(a) {
-    return cljs.core.empty_QMARK_.call(null, a) ? null : a;
-  }.call(null, clojure.string.trim.call(null, a));
-};
-arcadia.vscode.parens.complete_form = function(a) {
-  for (var b = [], c = arguments.length, d = 0;;) {
-    if (d < c) {
-      b.push(arguments[d]), d += 1;
-    } else {
-      break;
-    }
-  }
-  switch(b.length) {
-    case 1:
-      return arcadia.vscode.parens.complete_form.cljs$core$IFn$_invoke$arity$1(arguments[0]);
-    case 2:
-      return arcadia.vscode.parens.complete_form.cljs$core$IFn$_invoke$arity$2(arguments[0], arguments[1]);
-    default:
-      throw Error([cljs.core.str("Invalid arity: "), cljs.core.str(b.length)].join(""));;
-  }
-};
-arcadia.vscode.parens.complete_form.cljs$core$IFn$_invoke$arity$1 = function(a) {
-  return cljs.core.dissoc.call(null, function(b) {
-    return cljs.core.truth_(b) ? cljs.core.update.call(null, a, new cljs.core.Keyword(null, "forms", "forms", 2045992350), cljs.core.conj, b) : a;
-  }.call(null, arcadia.vscode.parens.kill_ws.call(null, (new cljs.core.Keyword(null, "form", "form", -1624062471)).cljs$core$IFn$_invoke$arity$1(a))), new cljs.core.Keyword(null, "form", "form", -1624062471));
-};
-arcadia.vscode.parens.complete_form.cljs$core$IFn$_invoke$arity$2 = function(a, b) {
-  return arcadia.vscode.parens.complete_form.call(null, cljs.core.update.call(null, a, new cljs.core.Keyword(null, "form", "form", -1624062471), cljs.core.str, b));
-};
-arcadia.vscode.parens.complete_form.cljs$lang$maxFixedArity = 2;
-arcadia.vscode.parens.check_complete = function(a, b, c) {
-  a = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a;
-  var d = cljs.core.get.call(null, a, new cljs.core.Keyword(null, "stack", "stack", -793405930)), e = cljs.core.get.call(null, a, new cljs.core.Keyword(null, "form", "form", -1624062471)), f = cljs.core.get.call(null, a, new cljs.core.Keyword(null, "opened", "opened", -1451743091));
-  return cljs.core._EQ_.call(null, new cljs.core.Keyword(null, "open", "open", -1763596448), b) && !cljs.core.empty_QMARK_.call(null, e) && cljs.core._EQ_.call(null, f, 1) ? arcadia.vscode.parens.complete_form.call(null, a) : cljs.core._EQ_.call(null, new cljs.core.Keyword(null, "close", "close", 1835149582), b) && cljs.core.empty_QMARK_.call(null, d) && 0 < f ? arcadia.vscode.parens.complete_form.call(null, a, c) : cljs.core._EQ_.call(null, new cljs.core.Keyword(null, "close", "close", 1835149582), 
-  b) ? arcadia.vscode.parens.add_to_form.call(null, a, c) : a;
-};
-arcadia.vscode.parens.open_parens = function(a, b) {
-  return arcadia.vscode.parens.add_to_form.call(null, arcadia.vscode.parens.check_complete.call(null, cljs.core.update.call(null, cljs.core.update.call(null, a, new cljs.core.Keyword(null, "stack", "stack", -793405930), cljs.core.conj, b), new cljs.core.Keyword(null, "opened", "opened", -1451743091), function(a) {
-    a = cljs.core.truth_(a) ? a : 0;
-    return a + 1;
-  }), new cljs.core.Keyword(null, "open", "open", -1763596448), b), b);
-};
-arcadia.vscode.parens.close_parens = function(a, b) {
-  return arcadia.vscode.parens.check_complete.call(null, cljs.core.update.call(null, a, new cljs.core.Keyword(null, "stack", "stack", -793405930), cljs.core.pop), new cljs.core.Keyword(null, "close", "close", 1835149582), b);
-};
-arcadia.vscode.parens.parse_forms = function(a) {
-  return cljs.core.reduce.call(null, function(a, c) {
-    var d = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, e = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "stack", "stack", -793405930)), f = arcadia.vscode.parens.PARENS.indexOf(c);
-    return cljs.core._EQ_.call(null, -1, f) ? arcadia.vscode.parens.add_to_form.call(null, d, c) : cljs.core.not_EQ_.call(null, 0, cljs.core.mod.call(null, f, 2)) ? cljs.core.empty_QMARK_.call(null, e) || cljs.core.not_EQ_.call(null, arcadia.vscode.parens.PARENS.indexOf(cljs.core.peek.call(null, e)), f - 1) ? cljs.core.reduced.call(null, arcadia.vscode.parens.add_to_form.call(null, d, c)) : arcadia.vscode.parens.close_parens.call(null, d, c) : arcadia.vscode.parens.open_parens.call(null, d, c);
-  }, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "stack", "stack", -793405930), cljs.core.PersistentVector.EMPTY, new cljs.core.Keyword(null, "forms", "forms", 2045992350), cljs.core.PersistentVector.EMPTY], null), a);
-};
-arcadia.vscode.parens.check_forms = function(a) {
-  return function(a) {
-    var c = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a;
-    a = cljs.core.get.call(null, c, new cljs.core.Keyword(null, "stack", "stack", -793405930));
-    var d = cljs.core.get.call(null, c, new cljs.core.Keyword(null, "forms", "forms", 2045992350)), c = cljs.core.get.call(null, c, new cljs.core.Keyword(null, "form", "form", -1624062471));
-    return cljs.core.empty_QMARK_.call(null, a) && null != c ? new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.conj.call(null, d, c), null], null) : new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [d, c], null);
-  }.call(null, arcadia.vscode.parens.parse_forms.call(null, a));
-};
 var vscode = {util:{}};
 vscode.util.vscode = require("vscode");
 vscode.util.export_BANG_ = function(a) {
@@ -21685,11 +21617,9 @@ vscode.util.new_promise = function(a) {
 vscode.util.then = function(a, b) {
   return a.then(b);
 };
-vscode.util.new_Range = function(a, b) {
-  return new vscode.util.vscode.Range(a, b);
-};
+var arcadia = {vscode:{}};
 arcadia.vscode.repl = {};
-arcadia.vscode.repl.dgram = require("dgram");
+arcadia.vscode.repl.net = require("net");
 arcadia.vscode.repl.vscode = require("vscode");
 arcadia.vscode.repl.repl = cljs.core.atom.call(null, null);
 arcadia.vscode.repl.repl_options = function() {
@@ -21698,54 +21628,44 @@ arcadia.vscode.repl.repl_options = function() {
 }();
 arcadia.vscode.repl.handle_input = function(a) {
   return vscode.util.new_promise.call(null, function(b) {
-    var c = cljs.core.deref.call(null, arcadia.vscode.repl.repl), d = null != c && (c.cljs$lang$protocol_mask$partition0$ & 64 || c.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, c) : c, c = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "input", "input", 556931961)), e = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "server", "server", 1499190120)), f = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "output", "output", -1105869043)), g = cljs.core.get.call(null, 
-    d, new cljs.core.Keyword(null, "host", "host", -1558485167)), d = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "port", "port", 1534937262));
-    cljs.core.swap_BANG_.call(null, c, cljs.core.str, a);
-    for (var h = arcadia.vscode.parens.check_forms.call(null, cljs.core.deref.call(null, c)), k = cljs.core.nth.call(null, h, 0, null), h = cljs.core.nth.call(null, h, 1, null), k = cljs.core.seq.call(null, k), l = null, m = 0, n = 0;;) {
-      if (n < m) {
-        var p = cljs.core._nth.call(null, l, n);
-        f.appendLine(p);
-        e.send(p, d, g);
-        n += 1;
-      } else {
-        if (k = cljs.core.seq.call(null, k)) {
-          l = k, cljs.core.chunked_seq_QMARK_.call(null, l) ? (k = cljs.core.chunk_first.call(null, l), n = cljs.core.chunk_rest.call(null, l), l = k, m = cljs.core.count.call(null, k), k = n) : (k = cljs.core.first.call(null, l), f.appendLine(k), e.send(k, d, g), k = cljs.core.next.call(null, l), l = null, m = 0), n = 0;
-        } else {
-          break;
-        }
-      }
-    }
-    cljs.core.reset_BANG_.call(null, c, cljs.core.truth_(h) ? h : "");
+    var c = cljs.core.deref.call(null, arcadia.vscode.repl.repl), d = null != c && (c.cljs$lang$protocol_mask$partition0$ & 64 || c.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, c) : c, c = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "client", "client", -1323448117)), d = cljs.core.get.call(null, d, new cljs.core.Keyword(null, "output", "output", -1105869043)), e = [cljs.core.str(a), cljs.core.str("\n")].join("");
+    d.append(e);
+    c.write(e);
     return b.call(null, !0);
   });
 };
-arcadia.vscode.repl.parse_msg = function(a) {
+arcadia.vscode.repl.parse_data = function(a) {
   return cljs.core.juxt.call(null, function(a) {
     return a.pop();
   }, function(a) {
     return a.join("\n");
   }).call(null, a.toString().split("\n"));
 };
-arcadia.vscode.repl.handle_response = function(a, b, c) {
-  c = arcadia.vscode.repl.parse_msg.call(null, b);
-  b = cljs.core.nth.call(null, c, 0, null);
-  c = cljs.core.nth.call(null, c, 1, null);
+arcadia.vscode.repl.handle_response = function(a, b) {
+  var c = arcadia.vscode.repl.parse_data.call(null, b), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null);
   a.appendLine(c);
-  return a.append(b);
+  return a.append(d);
 };
-arcadia.vscode.repl.repl_init = cljs.core.list(new cljs.core.Symbol(null, "binding", "binding", -2114503176, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "*warn-on-reflection*", "*warn-on-reflection*", -1574812619, null), !1], null), cljs.core.list(new cljs.core.Symbol(null, "do", "do", 1686842252, null), cljs.core.list(new cljs.core.Symbol(null, "println", "println", -733595439, null), "; Arcadia REPL"), cljs.core.list(new cljs.core.Symbol(null, 
-"println", "println", -733595439, null), cljs.core.list(new cljs.core.Symbol(null, "str", "str", -1564826950, null), "; Clojure ", cljs.core.list(new cljs.core.Symbol(null, "clojure-version", "clojure-version", -210044835, null)))), cljs.core.list(new cljs.core.Symbol(null, "println", "println", -733595439, null), cljs.core.list(new cljs.core.Symbol(null, "str", "str", -1564826950, null), "; Unity ", cljs.core.list(new cljs.core.Symbol("UnityEditorInternal.InternalEditorUtility", "GetFullUnityVersion", 
-"UnityEditorInternal.InternalEditorUtility/GetFullUnityVersion", 195882481, null)))), cljs.core.list(new cljs.core.Symbol(null, "println", "println", -733595439, null), cljs.core.list(new cljs.core.Symbol(null, "str", "str", -1564826950, null), "; Mono ", cljs.core.list(new cljs.core.Symbol(null, ".Invoke", ".Invoke", 1226733740, null), cljs.core.list(new cljs.core.Symbol(null, ".GetMethod", ".GetMethod", -925846449, null), new cljs.core.Symbol(null, "Mono.Runtime", "Mono.Runtime", -465208965, null), 
-"GetDisplayName", cljs.core.list(new cljs.core.Symbol(null, "enum-or", "enum-or", -160749900, null), new cljs.core.Symbol("System.Reflection.BindingFlags", "NonPublic", "System.Reflection.BindingFlags/NonPublic", -1611103399, null), new cljs.core.Symbol("System.Reflection.BindingFlags", "Static", "System.Reflection.BindingFlags/Static", -1817681093, null))), null, null)))));
+arcadia.vscode.repl.repl_init = cljs.core.list(new cljs.core.Symbol(null, "binding", "binding", -2114503176, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "*warn-on-reflection*", "*warn-on-reflection*", -1574812619, null), !1], null), cljs.core.list(new cljs.core.Symbol(null, "do", "do", 1686842252, null), cljs.core.list(new cljs.core.Symbol(null, "println", "println", -733595439, null), cljs.core.list(new cljs.core.Symbol(null, 
+"str", "str", -1564826950, null), "\n", "; Arcadia REPL", "\n", "; Clojure ", cljs.core.list(new cljs.core.Symbol(null, "clojure-version", "clojure-version", -210044835, null)), "\n", "; Unity ", cljs.core.list(new cljs.core.Symbol("UnityEditorInternal.InternalEditorUtility", "GetFullUnityVersion", "UnityEditorInternal.InternalEditorUtility/GetFullUnityVersion", 195882481, null)), "\n", "; Mono ", cljs.core.list(new cljs.core.Symbol(null, ".Invoke", ".Invoke", 1226733740, null), cljs.core.list(new cljs.core.Symbol(null, 
+".GetMethod", ".GetMethod", -925846449, null), new cljs.core.Symbol(null, "Mono.Runtime", "Mono.Runtime", -465208965, null), "GetDisplayName", cljs.core.list(new cljs.core.Symbol(null, "enum-or", "enum-or", -160749900, null), new cljs.core.Symbol("System.Reflection.BindingFlags", "NonPublic", "System.Reflection.BindingFlags/NonPublic", -1611103399, null), new cljs.core.Symbol("System.Reflection.BindingFlags", "Static", "System.Reflection.BindingFlags/Static", -1817681093, null))), null, null)))));
 arcadia.vscode.repl.connect_repl = function(a, b, c) {
-  var d = arcadia.vscode.repl.dgram.createSocket("udp4");
-  d.on("error", function(a) {
-    return function(a) {
-      return cljs.core.println.call(null, "Server error: ", cljs.core.js__GT_clj.call(null, a));
-    };
-  }(d));
-  d.on("message", cljs.core.partial.call(null, arcadia.vscode.repl.handle_response, a));
-  d.send("" + cljs.core.str(arcadia.vscode.repl.repl_init), c, b);
+  var d = new arcadia.vscode.repl.net.Socket;
+  (function() {
+    d.on("connect", function(a, b) {
+      return function() {
+        return b.write([cljs.core.str(arcadia.vscode.repl.repl_init), cljs.core.str("\n")].join(""));
+      };
+    }(d, d));
+    d.on("error", function(a, b) {
+      return function(a) {
+        return cljs.core.println.call(null, "Server error: ", cljs.core.js__GT_clj.call(null, a));
+      };
+    }(d, d));
+    d.on("data", cljs.core.partial.call(null, arcadia.vscode.repl.handle_response, a));
+    return d;
+  })();
+  d.connect(c, b);
   return d;
 };
 arcadia.vscode.repl.when_no_repl = function(a) {
@@ -21755,10 +21675,14 @@ arcadia.vscode.repl.when_no_repl = function(a) {
 };
 arcadia.vscode.repl.start_repl_STAR_ = function() {
   cljs.core.println.call(null, "Starting REPL...");
-  var a = (new cljs.core.Keyword(null, "host", "host", -1558485167)).cljs$core$IFn$_invoke$arity$1(arcadia.vscode.repl.repl_options), b = (new cljs.core.Keyword(null, "port", "port", 1534937262)).cljs$core$IFn$_invoke$arity$1(arcadia.vscode.repl.repl_options), c = arcadia.vscode.repl.vscode.window.createOutputChannel("Arcadia REPL"), d = arcadia.vscode.repl.connect_repl.call(null, c, a, b);
+  var a = (new cljs.core.Keyword(null, "host", "host", -1558485167)).cljs$core$IFn$_invoke$arity$1(arcadia.vscode.repl.repl_options);
+  cljs.core.println.call(null, [cljs.core.str("host: "), cljs.core.str(a)].join(""));
+  var b = (new cljs.core.Keyword(null, "port", "port", 1534937262)).cljs$core$IFn$_invoke$arity$1(arcadia.vscode.repl.repl_options);
+  cljs.core.println.call(null, [cljs.core.str("port: "), cljs.core.str(b)].join(""));
+  var c = arcadia.vscode.repl.vscode.window.createOutputChannel("Arcadia REPL"), d = arcadia.vscode.repl.connect_repl.call(null, c, a, b);
   c.show(!0);
   cljs.core.println.call(null, "REPL started!");
-  return cljs.core.reset_BANG_.call(null, arcadia.vscode.repl.repl, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "server", "server", 1499190120), d, new cljs.core.Keyword(null, "input", "input", 556931961), cljs.core.atom.call(null, ""), new cljs.core.Keyword(null, "output", "output", -1105869043), c, new cljs.core.Keyword(null, "host", "host", -1558485167), a, new cljs.core.Keyword(null, "port", "port", 1534937262), b], null));
+  return cljs.core.reset_BANG_.call(null, arcadia.vscode.repl.repl, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "client", "client", -1323448117), d, new cljs.core.Keyword(null, "output", "output", -1105869043), c, new cljs.core.Keyword(null, "host", "host", -1558485167), a, new cljs.core.Keyword(null, "port", "port", 1534937262), b], null));
 };
 arcadia.vscode.repl.start_repl = function() {
   return arcadia.vscode.repl.when_no_repl.call(null, function() {
@@ -21767,11 +21691,8 @@ arcadia.vscode.repl.start_repl = function() {
   });
 };
 arcadia.vscode.repl.send = function(a) {
-  return vscode.util.then.call(null, vscode.util.then.call(null, arcadia.vscode.repl.when_no_repl.call(null, arcadia.vscode.repl.start_repl_STAR_), function() {
+  return vscode.util.then.call(null, arcadia.vscode.repl.when_no_repl.call(null, arcadia.vscode.repl.start_repl_STAR_), function() {
     return arcadia.vscode.repl.handle_input.call(null, a);
-  }), function() {
-    var a = cljs.core.deref.call(null, arcadia.vscode.repl.repl), c = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, a = cljs.core.get.call(null, c, new cljs.core.Keyword(null, "input", "input", 556931961)), c = cljs.core.get.call(null, c, new cljs.core.Keyword(null, "output", "output", -1105869043));
-    return cljs.core.empty_QMARK_.call(null, cljs.core.deref.call(null, a)) ? null : c.append(cljs.core.deref.call(null, a));
   });
 };
 arcadia.vscode.repl.send_line = function(a) {

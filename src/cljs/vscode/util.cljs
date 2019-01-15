@@ -7,39 +7,36 @@
   (set! (.-exports js/module) (clj->js exports)))
 
 (defn register-command!
- [id f]
- (.registerCommand (.. vscode -commands) id f))
+  [id f]
+  (.registerCommand (.. vscode -commands) id f))
 
 (defn register-text-editor-command!
- [id f]
- (.registerTextEditorCommand (.. vscode -commands) id f))
+  [id f]
+  (.registerTextEditorCommand (.. vscode -commands) id f))
 
 (defn push-subscription!
- [ctx disp]
- (.push (.. ctx -subscriptions) disp))
+  [ctx disp]
+  (.push (.. ctx -subscriptions) disp))
 
 (defn info-message
- [msg]
- (.showInformationMessage (.. vscode -window) msg))
+  [msg]
+  (.showInformationMessage (.. vscode -window) msg))
 
 (defn get-config
- ([path]
-  (.. vscode -workspace (getConfiguration path)))
- ([conf key]
-  (.get conf key)))
- 
+  ([path]
+   (.. vscode -workspace (getConfiguration path)))
+  ([conf key]
+   (.get conf key)))
+
 (defn resolved-promise
- [body]
- (.resolve js/Promise body))
+  [body]
+  (.resolve js/Promise body))
 
 (defn new-promise
- [f]
- (js/Promise. f))
+  [f]
+  (js/Promise. f))
 
 (defn then
- [p f]
- (.then p f))
+  [p f]
+  (.then p f))
 
-(defn new-Range
- [a b]
- (js/vscode.util.vscode.Range. a b))
