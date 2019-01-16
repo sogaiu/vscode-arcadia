@@ -64,7 +64,26 @@
             "command": "arcadia.replSendRegion",
             "key": "ctrl+enter",
             "mac": "ctrl+enter"
-        }]
+        }],
+	"menus": {
+            "editor/context": [{
+                "when": "editorLangId == clojure",
+		"command": "arcadia.replSendFile",
+		"group": "arcadia@1"
+	    },{
+                "when": "editorLangId == clojure",
+		"command": "arcadia.replSendLine",
+		"group": "arcadia@2"
+	    },{
+                "when": "editorLangId == clojure",
+		"command": "arcadia.replSendRegion",
+		"group": "arcadia@3"
+	    },{
+                "when": "editorLangId == clojure",
+		"command": "arcadia.replSendSelection",
+		"group": "arcadia@4"
+	    }]
+	}
     },
     "scripts": {
         "preinstall": "lein cljsbuild once",
