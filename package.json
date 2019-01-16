@@ -82,6 +82,11 @@
                 "when": "editorLangId == clojure",
 		"command": "arcadia.replSendSelection",
 		"group": "arcadia@4"
+	    }],
+            "explorer/context": [{
+                "when": "resourceLangId == clojure",
+		"command": "arcadia.replSendFile",
+		"group": "arcadia@1"
 	    }]
 	}
     },
