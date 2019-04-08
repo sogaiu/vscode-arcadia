@@ -126,6 +126,11 @@
   [editor]
   (send (.. editor -document getText)))
 
+(defn send-load-file
+  [editor]
+  (let [fpath (.-fileName (.. editor -document))]
+    (send (str "(load-file \"" fpath "\")"))))
+
 (defn is-comment
   [line]
   (let [firstChar (subs (s/trim (.-text line)) 0 1)]
@@ -171,4 +176,5 @@
    (u/register-text-editor-command! "arcadia.replSendLine" send-line)
    (u/register-text-editor-command! "arcadia.replSendSelection" send-selection)
    (u/register-text-editor-command! "arcadia.replSendRegion" send-region)
-   (u/register-text-editor-command! "arcadia.replSendFile" send-file)])
+   (u/register-text-editor-command! "arcadia.replSendFile" send-file)
+   (u/register-text-editor-command! "arcadia.replLoadFile" send-load-file)])

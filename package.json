@@ -31,6 +31,9 @@
         },{
             "command": "arcadia.replSendRegion",
             "title": "Arcadia: REPL - Send Region"
+        },{
+            "command": "arcadia.replLoadFile",
+            "title": "Arcadia: REPL - Load File"
         }],
         "configuration": {
             "type": "object",
@@ -64,6 +67,10 @@
             "command": "arcadia.replSendRegion",
             "key": "ctrl+enter",
             "mac": "ctrl+enter"
+        },{
+            "command": "arcadia.replLoadFile",
+            "key": "ctrl+, e",
+            "mac": "ctrl+, e"
         }],
 	"menus": {
             "editor/context": [{
@@ -82,11 +89,19 @@
                 "when": "editorLangId == clojure",
 		"command": "arcadia.replSendSelection",
 		"group": "arcadia@4"
+	    },{
+                "when": "editorLangId == clojure",
+		"command": "arcadia.replLoadFile",
+		"group": "arcadia@5"
 	    }],
             "explorer/context": [{
                 "when": "resourceLangId == clojure",
 		"command": "arcadia.replSendFile",
 		"group": "arcadia@1"
+	    },{
+                "when": "resourceLangId == clojure",
+		"command": "arcadia.replLoadFile",
+		"group": "arcadia@2"
 	    }]
 	}
     },

@@ -21704,6 +21704,10 @@ arcadia.vscode.repl.send_selection = function(a) {
 arcadia.vscode.repl.send_file = function(a) {
   return arcadia.vscode.repl.send.call(null, a.document.getText());
 };
+arcadia.vscode.repl.send_load_file = function(a) {
+  a = a.document.fileName;
+  return arcadia.vscode.repl.send.call(null, [cljs.core.str('(load-file "'), cljs.core.str(a), cljs.core.str('")')].join(""));
+};
 arcadia.vscode.repl.is_comment = function(a) {
   a = cljs.core.subs.call(null, clojure.string.trim.call(null, a.text), 0, 1);
   return cljs.core._EQ_.call(null, a, /;/);
@@ -21732,8 +21736,8 @@ arcadia.vscode.repl.send_region = function(a) {
 };
 arcadia.vscode.repl.activate_repl = function() {
   cljs.core.println.call(null, "Registering REPL commands");
-  return new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [vscode.util.register_command_BANG_.call(null, "arcadia.replStart", arcadia.vscode.repl.start_repl), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendLine", arcadia.vscode.repl.send_line), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendSelection", arcadia.vscode.repl.send_selection), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendRegion", 
-  arcadia.vscode.repl.send_region), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendFile", arcadia.vscode.repl.send_file)], null);
+  return new cljs.core.PersistentVector(null, 6, 5, cljs.core.PersistentVector.EMPTY_NODE, [vscode.util.register_command_BANG_.call(null, "arcadia.replStart", arcadia.vscode.repl.start_repl), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendLine", arcadia.vscode.repl.send_line), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendSelection", arcadia.vscode.repl.send_selection), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendRegion", 
+  arcadia.vscode.repl.send_region), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replSendFile", arcadia.vscode.repl.send_file), vscode.util.register_text_editor_command_BANG_.call(null, "arcadia.replLoadFile", arcadia.vscode.repl.send_load_file)], null);
 };
 arcadia.vscode.core = {};
 cljs.nodejs.enable_util_print_BANG_.call(null);
