@@ -21705,7 +21705,7 @@ arcadia.vscode.repl.send_file = function(a) {
   return arcadia.vscode.repl.send.call(null, a.document.getText());
 };
 arcadia.vscode.repl.send_load_file = function(a) {
-  a = a.document.fileName;
+  a = clojure.string.replace.call(null, a.document.fileName, "\\", "\\\\");
   return arcadia.vscode.repl.send.call(null, [cljs.core.str('(load-file "'), cljs.core.str(a), cljs.core.str('")')].join(""));
 };
 arcadia.vscode.repl.is_comment = function(a) {

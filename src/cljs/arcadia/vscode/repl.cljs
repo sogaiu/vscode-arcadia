@@ -128,7 +128,7 @@
 
 (defn send-load-file
   [editor]
-  (let [fpath (.-fileName (.. editor -document))]
+  (let [fpath (s/replace (.-fileName (.. editor -document)) "\\" "\\\\")]
     (send (str "(load-file \"" fpath "\")"))))
 
 (defn is-comment
